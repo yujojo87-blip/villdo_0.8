@@ -54,7 +54,7 @@ const LANG_OPTIONS: { code: Language; label: string; short: string }[] = [
 type Page = 'manifesto' | 'pricing' | 'about';
 
 const App: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true); // Default to Dark Mode
+  const [isDarkMode, setIsDarkMode] = useState(false); // Default to Light Mode
   const [lang, setLang] = useState<Language>('en'); // Default to English
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>('manifesto');

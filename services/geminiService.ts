@@ -35,6 +35,9 @@ const getSystemInstruction = (mode: DemoMode, lang: Language): string => {
     case DemoMode.AGENT_TWITTER:
     case DemoMode.AGENT_CALENDAR:
       return `${baseInstruction} ${langInstruction} Context: Agentic Action. Extract intent and draft the action.`;
+    case DemoMode.SUMMARIZE_PDF:
+    case DemoMode.SUMMARIZE_MEETING:
+      return `${baseInstruction} ${langInstruction} Context: Summarization. Extract key points and structure them clearly.`;
     default:
       return `${baseInstruction} ${langInstruction}`;
   }

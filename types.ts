@@ -17,7 +17,10 @@ export enum DemoMode {
   // Translation Modes
   TRANSLATION_SELECTION = 'Translation Selection',
   TRANSLATION_REPLY_TEXT = 'Translation Reply Text',
-  TRANSLATION_REPLY_VOICE = 'Translation Reply Voice'
+  TRANSLATION_REPLY_VOICE = 'Translation Reply Voice',
+  // Summarize Modes
+  SUMMARIZE_PDF = 'Summarize PDF',
+  SUMMARIZE_MEETING = 'Summarize Meeting'
 }
 
 export interface FeatureProps {
