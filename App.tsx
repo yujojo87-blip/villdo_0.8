@@ -23,7 +23,7 @@ const CONTENT = {
     beta: "Get Beta",
     download: "Download for Mac",
     version: "v1.0.0 • Apple Silicon & Intel",
-    nav: { manifesto: "Manifesto", pricing: "Pricing", about: "About" }
+    nav: { manifesto: "Product", pricing: "Pricing", about: "About" }
   },
   zh: {
     title: "Voice Will Do",
@@ -54,7 +54,7 @@ const LANG_OPTIONS: { code: Language; label: string; short: string }[] = [
 type Page = 'manifesto' | 'pricing' | 'about';
 
 const App: React.FC = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false); // Default to Light Mode
+  const [isDarkMode, setIsDarkMode] = useState(true); // Default to Dark Mode
   const [lang, setLang] = useState<Language>('en'); // Default to English
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>('manifesto');
@@ -71,62 +71,45 @@ const App: React.FC = () => {
         <WaveBackground isDarkMode={isDarkMode} />
         
         {/* Minimal Header */}
-        <nav className="fixed top-0 w-full z-50 h-24 flex items-center justify-between px-6 md:px-16 bg-gradient-to-b from-[#F5F5F7]/90 to-transparent dark:from-black/90 backdrop-blur-sm pointer-events-none">
+        <nav className="fixed top-0 w-full z-50 h-[64px] flex items-center justify-between px-6 md:px-8 lg:px-12 bg-[#F5F5F7]/80 dark:bg-black/70 backdrop-blur-xl backdrop-saturate-150 border-b border-black/5 dark:border-white/5 transition-all duration-500">
           <div 
             onClick={() => setCurrentPage('manifesto')}
-            className="pointer-events-auto flex items-center gap-3 font-medium tracking-tight opacity-80 hover:opacity-100 transition-opacity cursor-pointer z-20"
+            className="flex items-center gap-3 font-medium tracking-tight hover:opacity-80 transition-opacity cursor-pointer z-20 group"
           >
-            <div className="w-2 h-2 bg-black dark:bg-white rounded-full shadow-[0_0_10px_rgba(0,0,0,0.2)] dark:shadow-[0_0_10px_rgba(255,255,255,0.8)] transition-colors duration-500" />
-            <span className="text-black dark:text-white transition-colors duration-500">Villdo</span>
+            <div className="w-8 h-8 bg-gradient-to-br from-zinc-800 to-black dark:from-white dark:to-zinc-300 rounded-[8px] shadow-sm flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <div className="w-3 h-3 bg-white dark:bg-black rounded-full" />
+            </div>
+            <span className="text-zinc-900 dark:text-white text-lg font-semibold tracking-tighter">Villdo</span>
           </div>
 
-          {/* Center Navigation */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-auto z-20 hidden md:block">
-            <div className="flex gap-1 bg-white/50 dark:bg-white/5 backdrop-blur-md p-1 rounded-full border border-zinc-200/50 dark:border-white/5 shadow-sm">
-              <button 
-                onClick={() => setCurrentPage('manifesto')}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  currentPage === 'manifesto' 
-                    ? 'bg-white dark:bg-zinc-800 text-black dark:text-white shadow-sm' 
-                    : 'text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
-                }`}
-              >
-                {t.nav.manifesto}
-              </button>
-              <button 
-                onClick={() => setCurrentPage('pricing')}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  currentPage === 'pricing' 
-                    ? 'bg-white dark:bg-zinc-800 text-black dark:text-white shadow-sm' 
-                    : 'text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
-                }`}
-              >
-                {t.nav.pricing}
-              </button>
-              <button 
-                onClick={() => setCurrentPage('about')}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                  currentPage === 'about' 
-                    ? 'bg-white dark:bg-zinc-800 text-black dark:text-white shadow-sm' 
-                    : 'text-zinc-500 hover:text-black dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
-                }`}
-              >
-                {t.nav.about}
-              </button>
+          {/* Center Navigation - Desktop */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 hidden md:block">
+            <div className="flex p-1 bg-zinc-200/50 dark:bg-white/10 backdrop-blur-xl rounded-full border border-black/5 dark:border-white/5 shadow-inner">
+              {(['manifesto', 'pricing', 'about'] as Page[]).map((page) => (
+                 <button 
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-6 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                    currentPage === page
+                      ? 'bg-white dark:bg-zinc-800 text-black dark:text-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]' 
+                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5'
+                  }`}
+                >
+                  {t.nav[page]}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Mobile Navigation Dropdown (Alternative to center nav for small screens) - Simplified to just icons or similar if needed, but for now we rely on desktop layout or simple stacking */}
-
-          <div className="pointer-events-auto flex items-center gap-4 z-20">
+          <div className="flex items-center gap-3 z-20">
             {/* Language Dropdown */}
             <div className="relative">
               <button 
                 onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 transition-all text-xs font-medium tracking-wide"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 transition-all text-xs font-medium tracking-wide border border-transparent hover:border-black/5 dark:hover:border-white/10"
                 aria-label="Switch language"
               >
-                 <Globe className="w-4 h-4" />
+                 <Globe className="w-3.5 h-3.5" />
                  <span className="uppercase">{LANG_OPTIONS.find(l => l.code === lang)?.short}</span>
                  <ChevronDown className={`w-3 h-3 opacity-50 transition-transform duration-300 ${isLangMenuOpen ? 'rotate-180' : ''}`} />
               </button>
@@ -134,7 +117,7 @@ const App: React.FC = () => {
               {isLangMenuOpen && (
                 <>
                   <div className="fixed inset-0 z-10" onClick={() => setIsLangMenuOpen(false)} />
-                  <div className="absolute top-full right-0 mt-2 w-32 bg-white/80 dark:bg-[#1c1c1e]/90 backdrop-blur-xl backdrop-saturate-150 border border-zinc-200 dark:border-white/10 rounded-xl shadow-xl overflow-hidden z-20 flex flex-col py-1 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
+                  <div className="absolute top-full right-0 mt-2 w-32 bg-white/80 dark:bg-[#1c1c1e]/90 backdrop-blur-xl backdrop-saturate-150 border border-black/5 dark:border-white/10 rounded-2xl shadow-xl overflow-hidden z-20 flex flex-col py-1 animate-in fade-in zoom-in-95 duration-200 origin-top-right">
                     {LANG_OPTIONS.map((option) => (
                       <button
                         key={option.code}
@@ -159,67 +142,64 @@ const App: React.FC = () => {
 
             <button 
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 transition-all"
+              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-zinc-600 dark:text-zinc-400 transition-all border border-transparent hover:border-black/5 dark:hover:border-white/10"
               aria-label="Toggle theme"
             >
-              {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <button className="hidden md:block bg-black text-white dark:bg-white dark:text-black px-6 py-2 rounded-full text-sm font-medium hover:scale-105 transition-all shadow-lg shadow-black/10 dark:shadow-[0_0_20px_rgba(255,255,255,0.1)]">
+            <button className="hidden md:block bg-black text-white dark:bg-white dark:text-black px-5 py-2 rounded-full text-xs font-semibold hover:scale-105 transition-all shadow-lg shadow-black/10 dark:shadow-white/10">
               {t.beta}
             </button>
           </div>
         </nav>
         
-        {/* Mobile Page Navigation (Visible only on small screens) */}
-        <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-40 bg-white/80 dark:bg-zinc-800/90 backdrop-blur-lg border border-zinc-200 dark:border-white/10 rounded-full shadow-2xl p-1.5 flex gap-1">
-           <button 
-             onClick={() => setCurrentPage('manifesto')}
-             className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${currentPage === 'manifesto' ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-zinc-500 dark:text-zinc-400'}`}
-           >
-             {t.nav.manifesto}
-           </button>
-           <button 
-             onClick={() => setCurrentPage('pricing')}
-             className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${currentPage === 'pricing' ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-zinc-500 dark:text-zinc-400'}`}
-           >
-             {t.nav.pricing}
-           </button>
-           <button 
-             onClick={() => setCurrentPage('about')}
-             className={`px-4 py-2 rounded-full text-xs font-medium transition-all ${currentPage === 'about' ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-zinc-500 dark:text-zinc-400'}`}
-           >
-             {t.nav.about}
-           </button>
+        {/* Mobile Page Navigation (Floating Dock) */}
+        <div className="md:hidden fixed bottom-8 left-1/2 -translate-x-1/2 z-40 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl backdrop-saturate-150 border border-black/5 dark:border-white/10 rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.12)] p-1.5 flex gap-1 transform transition-all duration-300 hover:scale-105">
+           {(['manifesto', 'pricing', 'about'] as Page[]).map((page) => (
+              <button 
+               key={page}
+               onClick={() => setCurrentPage(page)}
+               className={`px-5 py-2.5 rounded-full text-xs font-medium transition-all ${
+                 currentPage === page 
+                  ? 'bg-black text-white dark:bg-white dark:text-black shadow-md' 
+                  : 'text-zinc-500 dark:text-zinc-400'
+               }`}
+             >
+               {t.nav[page]}
+             </button>
+           ))}
         </div>
 
-        <main className="relative z-10 pt-32 pb-20 px-6">
-          <div className="max-w-7xl mx-auto text-center mb-16">
+        <main className="relative z-10 pt-32 pb-24 px-6">
+          <div className="max-w-[1200px] mx-auto text-center">
             {currentPage === 'manifesto' ? (
               <>
-                <h1 className="text-5xl md:text-8xl font-medium tracking-tighter mb-6 text-transparent bg-clip-text bg-gradient-to-b from-zinc-900 to-zinc-500 dark:from-white dark:to-white/40 animate-in fade-in slide-in-from-bottom-8 duration-1000 transition-all">
+                <h1 className="text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tighter mb-8 text-transparent bg-clip-text bg-gradient-to-b from-black via-zinc-800 to-zinc-500 dark:from-white dark:via-zinc-100 dark:to-zinc-500 animate-in fade-in slide-in-from-bottom-8 duration-1000 leading-[1.1]">
                   {t.title}
                 </h1>
                 
-                <p className="text-xl text-zinc-500 dark:text-zinc-500 font-light mb-16 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-200">
-                  {t.subtitle} <kbd className="bg-black/5 dark:bg-white/10 border border-black/5 dark:border-white/10 px-2 py-1 rounded text-zinc-600 dark:text-zinc-300 text-sm mx-1 shadow-sm transition-colors font-sans">Fn</kbd> {t.subtitleEnd}
+                <p className="text-xl md:text-2xl text-zinc-500 dark:text-zinc-400 font-normal mb-20 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-100 tracking-tight max-w-2xl mx-auto leading-relaxed">
+                  {t.subtitle} <kbd className="bg-gradient-to-b from-zinc-50 to-zinc-200 dark:from-zinc-800 dark:to-zinc-900 border border-b-2 border-zinc-300 dark:border-black/50 px-2.5 py-0.5 rounded-[6px] text-zinc-800 dark:text-zinc-200 text-sm mx-1 font-sans shadow-sm font-medium">Fn</kbd> {t.subtitleEnd}
                 </p>
 
                 {/* Interactive Demo Container */}
-                <div className="animate-in fade-in zoom-in-95 duration-1000 delay-300 mb-20">
+                <div className="animate-in fade-in zoom-in-95 duration-1000 delay-200 mb-32">
                   <InteractiveDemo lang={lang} />
                 </div>
 
                 {/* Privacy Section */}
-                <Privacy lang={lang} />
+                <div className="mb-32">
+                   <Privacy lang={lang} />
+                </div>
 
                 {/* Download Button Section */}
-                <div className="flex flex-col items-center mb-20 animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-500 mt-20">
-                   <button className="group flex items-center gap-3 bg-zinc-900 dark:bg-white text-white dark:text-black px-8 py-4 rounded-full text-lg font-medium hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-white/20 transition-all duration-300 relative overflow-hidden ease-out">
+                <div className="flex flex-col items-center animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
+                   <button className="group relative flex items-center gap-3 bg-zinc-900 dark:bg-white text-white dark:text-black px-10 py-5 rounded-full text-lg font-medium hover:scale-105 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)] dark:hover:shadow-[0_20px_40px_-12px_rgba(255,255,255,0.3)] transition-all duration-500 ease-out">
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                      <AppleLogo className="w-6 h-6 mb-1" />
-                      <span>{t.download}</span>
+                      <AppleLogo className="w-6 h-6 mb-0.5" />
+                      <span className="tracking-tight">{t.download}</span>
                    </button>
-                   <span className="mt-4 text-xs font-medium text-zinc-400 dark:text-zinc-600 tracking-wide">
+                   <span className="mt-6 text-xs font-medium text-zinc-400 dark:text-zinc-500 tracking-wide uppercase">
                       {t.version}
                    </span>
                 </div>

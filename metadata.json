@@ -1,5 +1,5 @@
 {
-  "name": "Villdo_0.9",
+  "name": "Villdo0.91",
   "description": "Villdo (Voice Will Do) - The ultimate voice-to-text agent for PC. Press FN to dictate, edit, and format text instantly across any application.",
   "requestFramePermissions": [
     "microphone"

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Mic, Keyboard, RefreshCw, ShieldCheck, Zap, Send, MousePointer2, Mail, Loader2, Sparkles, CheckCircle2, TrendingUp, Lightbulb, Coffee, Search, Hash, User, Calendar, AlertCircle, Cloud, Globe, MessageCircle, Play, Pause, Languages, ArrowRightLeft, FileText, FileBarChart, Clock, Paperclip, MoreHorizontal, ChevronLeft, Volume2, X } from 'lucide-react';
+import { Mic, Keyboard, RefreshCw, ShieldCheck, Zap, Send, MousePointer2, Mail, Loader2, Sparkles, CheckCircle2, TrendingUp, Lightbulb, Coffee, Search, Hash, User, Calendar, AlertCircle, Cloud, Globe, MessageCircle, Play, Pause, Languages, ArrowRightLeft, FileText, FileBarChart, Clock, Paperclip, MoreHorizontal, ChevronLeft } from 'lucide-react';
 import { DemoMode, Language } from '../types';
 
 // Helper component for animated strikethrough
 const AnimatedStrike: React.FC<{ children: React.ReactNode; show: boolean }> = ({ children, show }) => (
   <span className="relative inline-block">
-    <span className={`transition-opacity duration-300 ${show ? 'opacity-50' : 'opacity-100'}`}>
+    <span className={`transition-opacity duration-300 ${show ? 'opacity-40' : 'opacity-100'}`}>
       {children}
     </span>
     <span 
-      className={`absolute top-1/2 left-0 h-[2px] bg-red-500 rounded-full transition-all duration-500 ease-out ${show ? 'w-full' : 'w-0'}`} 
+      className={`absolute top-1/2 left-0 h-[1.5px] bg-red-500/80 rounded-full transition-all duration-500 ease-out ${show ? 'w-full' : 'w-0'}`} 
       style={{ transform: 'translateY(-50%)' }}
     />
   </span>
@@ -18,12 +18,9 @@ const AnimatedStrike: React.FC<{ children: React.ReactNode; show: boolean }> = (
 // Helper component for animated underline (formatting indicator)
 const AnimatedUnderline: React.FC<{ children: React.ReactNode; show: boolean }> = ({ children, show }) => (
   <span className="relative inline-block">
-    <span className={`transition-all duration-300 ${show ? 'text-blue-600 dark:text-blue-400' : ''}`}>
+    <span className={`transition-all duration-300 ${show ? 'text-blue-600 dark:text-blue-400 font-medium' : ''}`}>
       {children}
     </span>
-    <span 
-      className={`absolute bottom-[1px] left-0 h-[2px] bg-blue-500 dark:bg-blue-400 rounded-full transition-all duration-500 ease-out ${show ? 'w-full' : 'w-0'}`} 
-    />
   </span>
 );
 
@@ -33,11 +30,11 @@ const AudioWaveform = () => (
     {[1, 2, 3, 4, 5].map((i) => (
       <div 
         key={i} 
-        className="w-1 bg-white/90 rounded-full animate-wave origin-bottom"
+        className="w-0.5 bg-white/90 rounded-full animate-wave origin-bottom"
         style={{ 
           height: '100%', 
-          animationDelay: `${i * 0.15}s`,
-          animationDuration: '1s'
+          animationDelay: `${i * 0.1}s`,
+          animationDuration: '0.8s'
         }} 
       />
     ))}
@@ -372,318 +369,687 @@ const CATEGORY_CONFIG = [
 
 const MODE_LABELS: Record<Language, Record<DemoMode, string>> = {
   en: {
-    [DemoMode.PROFESSIONAL_EMAIL]: "Refine Email",
-    [DemoMode.SLACK_MESSAGE]: "Refine Message",
-    [DemoMode.PERSONAL_NOTE]: "Refine Note",
-    [DemoMode.REMOVE_FILLERS]: "Remove Fillers",
-    [DemoMode.REMOVE_ACCENTS]: "Fix Grammar",
-    [DemoMode.CODE_COMMENT]: "Code Comment",
-    [DemoMode.CREATIVE_WRITING]: "Creative Writing",
-    [DemoMode.AGENT_EMAIL]: "Draft Email",
-    [DemoMode.AGENT_TWITTER]: "Draft Tweet",
-    [DemoMode.AGENT_CALENDAR]: "Manage Calendar",
-    [DemoMode.TRANSLATION_SELECTION]: "Translate",
-    [DemoMode.TRANSLATION_REPLY_TEXT]: "Reply Text",
-    [DemoMode.TRANSLATION_REPLY_VOICE]: "Reply Voice",
-    [DemoMode.SUMMARIZE_PDF]: "Summarize PDF",
-    [DemoMode.SUMMARIZE_MEETING]: "Meeting Minutes"
+    [DemoMode.PROFESSIONAL_EMAIL]: "Polishing",
+    [DemoMode.REMOVE_FILLERS]: "Removes Filler",
+    [DemoMode.REMOVE_ACCENTS]: "Remove Accents",
+    [DemoMode.SLACK_MESSAGE]: "Intent",
+    [DemoMode.PERSONAL_NOTE]: "Structuring",
+    [DemoMode.CODE_COMMENT]: "Summarizing",
+    [DemoMode.CREATIVE_WRITING]: "Polishing",
+    [DemoMode.AGENT_EMAIL]: "Email",
+    [DemoMode.AGENT_TWITTER]: "X (Twitter)",
+    [DemoMode.AGENT_CALENDAR]: "Calendar",
+    [DemoMode.TRANSLATION_SELECTION]: "Web",
+    [DemoMode.TRANSLATION_REPLY_TEXT]: "Reply",
+    [DemoMode.TRANSLATION_REPLY_VOICE]: "Voice",
+    [DemoMode.SUMMARIZE_PDF]: "Chat PDF",
+    [DemoMode.SUMMARIZE_MEETING]: "Minutes"
   },
   zh: {
-    [DemoMode.PROFESSIONAL_EMAIL]: "邮件润色",
-    [DemoMode.SLACK_MESSAGE]: "消息润色",
-    [DemoMode.PERSONAL_NOTE]: "笔记润色",
-    [DemoMode.REMOVE_FILLERS]: "去除口语",
-    [DemoMode.REMOVE_ACCENTS]: "语法修正",
-    [DemoMode.CODE_COMMENT]: "代码注释",
-    [DemoMode.CREATIVE_WRITING]: "创意写作",
-    [DemoMode.AGENT_EMAIL]: "起草邮件",
-    [DemoMode.AGENT_TWITTER]: "起草推文",
-    [DemoMode.AGENT_CALENDAR]: "管理日程",
-    [DemoMode.TRANSLATION_SELECTION]: "选中翻译",
-    [DemoMode.TRANSLATION_REPLY_TEXT]: "文本回复",
+    [DemoMode.PROFESSIONAL_EMAIL]: "润色优化",
+    [DemoMode.REMOVE_FILLERS]: "去除语气词",
+    [DemoMode.REMOVE_ACCENTS]: "去除口音",
+    [DemoMode.SLACK_MESSAGE]: "理解意图",
+    [DemoMode.PERSONAL_NOTE]: "智能结构",
+    [DemoMode.CODE_COMMENT]: "总结摘要",
+    [DemoMode.CREATIVE_WRITING]: "润色优化",
+    [DemoMode.AGENT_EMAIL]: "邮箱",
+    [DemoMode.AGENT_TWITTER]: "X (Twitter)",
+    [DemoMode.AGENT_CALENDAR]: "日程",
+    [DemoMode.TRANSLATION_SELECTION]: "网页翻译",
+    [DemoMode.TRANSLATION_REPLY_TEXT]: "外文回复",
     [DemoMode.TRANSLATION_REPLY_VOICE]: "语音回复",
-    [DemoMode.SUMMARIZE_PDF]: "PDF总结",
+    [DemoMode.SUMMARIZE_PDF]: "聊天文件总结",
     [DemoMode.SUMMARIZE_MEETING]: "会议纪要"
   },
   ja: {
-    [DemoMode.PROFESSIONAL_EMAIL]: "メール推敲",
-    [DemoMode.SLACK_MESSAGE]: "チャット推敲",
-    [DemoMode.PERSONAL_NOTE]: "メモ推敲",
-    [DemoMode.REMOVE_FILLERS]: "フィラー除去",
-    [DemoMode.REMOVE_ACCENTS]: "文法修正",
-    [DemoMode.CODE_COMMENT]: "コードコメント",
-    [DemoMode.CREATIVE_WRITING]: "クリエイティブ",
-    [DemoMode.AGENT_EMAIL]: "メール起草",
-    [DemoMode.AGENT_TWITTER]: "ツイート作成",
-    [DemoMode.AGENT_CALENDAR]: "予定管理",
-    [DemoMode.TRANSLATION_SELECTION]: "翻訳",
-    [DemoMode.TRANSLATION_REPLY_TEXT]: "テキスト返信",
+    [DemoMode.PROFESSIONAL_EMAIL]: "文章推敲",
+    [DemoMode.REMOVE_FILLERS]: "言い淀み削除",
+    [DemoMode.REMOVE_ACCENTS]: "方言修正",
+    [DemoMode.SLACK_MESSAGE]: "意図理解",
+    [DemoMode.PERSONAL_NOTE]: "構造化",
+    [DemoMode.CODE_COMMENT]: "要約",
+    [DemoMode.CREATIVE_WRITING]: "文章推敲",
+    [DemoMode.AGENT_EMAIL]: "メール",
+    [DemoMode.AGENT_TWITTER]: "X (Twitter)",
+    [DemoMode.AGENT_CALENDAR]: "カレンダー",
+    [DemoMode.TRANSLATION_SELECTION]: "Web翻訳",
+    [DemoMode.TRANSLATION_REPLY_TEXT]: "チャット返信",
     [DemoMode.TRANSLATION_REPLY_VOICE]: "音声返信",
     [DemoMode.SUMMARIZE_PDF]: "PDF要約",
     [DemoMode.SUMMARIZE_MEETING]: "議事録作成"
   }
 };
 
+const UI_TEXT: Record<Language, any> = {
+  en: {
+    tryIt: "Try it yourself",
+    pressMic: "Press the microphone button below and read:",
+    listening: "Listening...",
+    reset: "Reset",
+    analysis: "Capabilities",
+    micError: "Microphone access denied. Please check permissions.",
+    // Translation Demo
+    translationDemo: {
+      selTitle: "Selection Translation",
+      selDesc: "Browse any webpage, select unknown text, and ask Villdo to translate instantly via popup.",
+      replyTitle: "Native Reply",
+      replyDesc: "Select a foreign message, speak your reply in your language, and Villdo writes it in theirs.",
+      voiceTitle: "Voice Analysis",
+      voiceDesc: "Listen to foreign voice messages, analyze via ASR, and reply fluently in the sender's language.",
+      translating: "Translating...",
+      analyzingAudio: "ASR & Analyzing...",
+      generatingReply: "Generating Native Reply..."
+    },
+    // Summarize Demo
+    summarizeDemo: {
+      pdfTitle: "Chat Context",
+      pdfDesc: "In your chat app, select a PDF file, voice your command, and Villdo instantly drafts a summary in your input box, ready to send.",
+      meetTitle: "Meeting Intelligence",
+      meetDesc: "Record offline meetings. Villdo identifies speakers and structures the chaos into clear minutes automatically.",
+      reading: "Reading File...",
+      listening: "Listening to Room...",
+      generating: "Generating Summary...",
+      drafting: "Drafting in Input Box..."
+    },
+    // Agent Email Specific
+    agentEmailDemo: {
+      input: "Read the unread email from my boss, and draft a reply saying I'm working on it.",
+      cap1Title: "Voice Operation",
+      cap1Desc: "Support checking emails and instantly transforming your dictation into professional drafts (Draft Mode).",
+      cap2Title: "Safety Boundary",
+      cap2Desc: "Adhere to 'Assist, not assume'. We draft, you decide when to send.",
+      contextFinding: "Found 1 unread email from 'Boss'",
+      contextAction: "Drafting response..."
+    },
+    // Agent Twitter Specific
+    agentTwitterDemo: {
+      input: "What is the AI community discussing recently? Summarize it for me and draft a tweet.",
+      cap1Title: "Trend Briefing",
+      cap1Desc: "Stop scrolling. One sentence to get global tech & industry summaries.",
+      cap2Title: "Instant Inspiration",
+      cap2Desc: "Capture fleeting ideas. Voice input -> AI polish -> Tweet draft.",
+      cap3Title: "Anti-Anxiety",
+      cap3Desc: "High-value info only. Save time for thinking and creating.",
+      scanning: "Scanning Trending Topics...",
+      drafting: "Generating Draft..."
+    },
+    // Agent Calendar Specific
+    agentCalendarDemo: {
+      input: "Move Tuesday's weekly meeting to Friday at 10 AM, and check for conflicts.",
+      cap1Title: "Natural Language Scheduling",
+      cap1Desc: "No manual clicking. Schedule events just like talking to a secretary.",
+      cap2Title: "Smart Conflict Detection",
+      cap2Desc: "MCP connects to calendar data in real-time, identifying conflicts instantly.",
+      cap3Title: "Seamless Sync",
+      cap3Desc: "Instantly syncs to all your devices after voice confirmation. Stable and reliable.",
+      checking: "Checking Calendar...",
+      moving: "Rescheduling & Checking Conflicts..."
+    }
+  },
+  zh: {
+    tryIt: "亲自试一试",
+    pressMic: "点击右下角的麦克风按钮，并朗读：",
+    listening: "正在聆听...",
+    reset: "重置",
+    analysis: "功能演示",
+    micError: "无法访问麦克风，请检查权限。",
+     // Translation Demo
+    translationDemo: {
+      selTitle: "划词翻译",
+      selDesc: "浏览网页时选中不懂的文字，语音指令直接唤起悬浮翻译弹窗。",
+      replyTitle: "母语回复",
+      replyDesc: "选中外语消息，用中文口述回复，Villdo 自动以对方语言写入回复。",
+      voiceTitle: "语音分析",
+      voiceDesc: "收到外语语音条？自动进行 ASR 识别并生成地道的原语言回复。",
+      translating: "正在翻译...",
+      analyzingAudio: "ASR 识别与分析中...",
+      generatingReply: "正在生成外文回复..."
+    },
+    // Summarize Demo
+    summarizeDemo: {
+      pdfTitle: "聊天语境",
+      pdfDesc: "在聊天窗口直接选中 PDF 文件，说出指令，Villdo 会直接将总结草拟在您的输入框中，供您发送。",
+      meetTitle: "会议智能",
+      meetDesc: "录制线下会议。Villdo 能够识别发言人，并将混乱的讨论结构化为清晰的纪要。",
+      reading: "正在读取文件...",
+      listening: "正在聆听会议...",
+      generating: "正在生成摘要...",
+      drafting: "正在输入框草拟..."
+    },
+    // Agent Email Specific
+    agentEmailDemo: {
+      input: "读一下来自老板的未读邮件，然后帮我起草一个回复，说我正在处理",
+      cap1Title: "语音操作",
+      cap1Desc: "支持查收邮件，并将您的口述瞬间转化为商务风格的邮件草稿 (Draft Mode)。",
+      cap2Title: "安全边界",
+      cap2Desc: "坚持“辅助而不越权”。我们负责起草，发送权永远在您手中。",
+      contextFinding: "已发现 1 封来自“老板”的未读邮件",
+      contextAction: "正在根据上下文起草..."
+    },
+    // Agent Twitter Specific
+    agentTwitterDemo: {
+      input: "最近 AI 圈在讨论什么？，帮我总结下，并写成一条推文草稿",
+      cap1Title: "趋势听报",
+      cap1Desc: "告别无休止的信息流滑动。一句话，获取全球科技与行业热点摘要。",
+      cap2Title: "灵感速记",
+      cap2Desc: "抓住稍纵即逝的灵感。语音输入，AI 自动润色并生成推文草稿。",
+      cap3Title: "拒绝焦虑",
+      cap3Desc: "只获取高价值信息，把时间留给思考与创作。",
+      scanning: "正在扫描热点话题...",
+      drafting: "正在生成推文..."
+    },
+    // Agent Calendar Specific
+    agentCalendarDemo: {
+      input: "帮我把周二下午的周会挪到周五上午十点，顺便查查有没有冲突。",
+      cap1Title: "自然语言排期",
+      cap1Desc: "无需手动点击，像和秘书对话一样安排日程。",
+      cap2Title: "智能冲突检测",
+      cap2Desc: "MCP 实时连接日历数据，瞬间识别时间冲突并提供最优建议。",
+      cap3Title: "无缝同步",
+      cap3Desc: "语音确认后，即刻同步至您的所有设备，稳定可靠。",
+      checking: "正在检查日程...",
+      moving: "正在重新安排并检查冲突..."
+    }
+  },
+  ja: {
+    tryIt: "試してみる",
+    pressMic: "下のマイクボタンを押して、読み上げてください：",
+    listening: "聞き取り中...",
+    reset: "リセット",
+    analysis: "分析プロセス",
+    micError: "マイクへのアクセスが拒否されました。権限を確認してください。",
+    // Translation Demo
+    translationDemo: {
+      selTitle: "選択翻訳",
+      selDesc: "Web閲覧中、不明なテキストを選択して話しかけるだけで、ポップアップ翻訳を表示。",
+      replyTitle: "ネイティブ返信",
+      replyDesc: "外国語のメッセージを選択し、母国語で返信を話すと、相手の言語で自動入力。",
+      voiceTitle: "音声分析",
+      voiceDesc: "外国語のボイスメッセージをASR分析し、送信者の言語で流暢に返信を作成。",
+      translating: "翻訳中...",
+      analyzingAudio: "ASR分析中...",
+      generatingReply: "ネイティブ返信を作成中..."
+    },
+    // Summarize Demo
+    summarizeDemo: {
+      pdfTitle: "チャットコンテキスト",
+      pdfDesc: "チャット画面でPDFを選択し話しかけるだけで、Villdoが入力欄に要約をドラフト作成します。",
+      meetTitle: "会議インテリジェンス",
+      meetDesc: "オフライン会議を録音。Villdoが話者を識別し、議論を明確な議事録に構造化します。",
+      reading: "ファイルを読み込み中...",
+      listening: "会議を聞き取り中...",
+      generating: "要約を作成中...",
+      drafting: "入力欄に作成中..."
+    },
+    // Agent Email Specific
+    agentEmailDemo: {
+      input: "上司からの未読メールを読んで、対応中であるという返信の下書きを作って",
+      cap1Title: "音声操作",
+      cap1Desc: "メールの確認から、口述内容を即座にビジネスメールの下書き(Draft Mode)へ変換することをサポートします。",
+      cap2Title: "安全の境界線",
+      cap2Desc: "「推測ではなく支援」を徹底。AIが下書きを作成し、送信の最終決定権は常にあなたの手にあります。",
+      contextFinding: "「上司」からの未読メールを1件確認",
+      contextAction: "文脈に基づいて下書きを作成中..."
+    },
+    // Agent Twitter Specific
+    agentTwitterDemo: {
+      input: "最近のAI界隈のトレンドは？要約してツイートの下書きを作って。",
+      cap1Title: "トレンド把握",
+      cap1Desc: "無限スクロールは不要。一言で世界のテックトレンドを要約。",
+      cap2Title: "瞬時のひらめき",
+      cap2Desc: "音声入力からAIが自動でツイートを作成。アイデアを逃しません。",
+      cap3Title: "不安を解消",
+      cap3Desc: "高価値な情報だけを取得し、思考と創作に時間を。",
+      scanning: "トレンドをスキャン中...",
+      drafting: "ドラフトを作成中..."
+    },
+    // Agent Calendar Specific
+    agentCalendarDemo: {
+      input: "火曜日の午後の定例会議を金曜日の午前10時に移動して。あと、重複がないか確認して。",
+      cap1Title: "自然言語スケジューリング",
+      cap1Desc: "手動入力は不要。秘書に話しかけるように予定を管理できます。",
+      cap2Title: "スマートな競合検出",
+      cap2Desc: "MCPがリアルタイムでカレンダーを分析。重複を即座に検出し、最適な時間を提案します。",
+      cap3Title: "シームレス同期",
+      cap3Desc: "音声で確認後、すべてのデバイスに即座に同期されます。",
+      checking: "予定を確認中...",
+      moving: "再スケジュールと競合を確認中..."
+    }
+  }
+};
+
+interface InteractiveDemoProps {
+  lang: Language;
+}
+
 export const InteractiveDemo: React.FC<InteractiveDemoProps> = ({ lang }) => {
-  const [activeCategory, setActiveCategory] = useState('transcribe');
-  const [activeMode, setActiveMode] = useState(DemoMode.PROFESSIONAL_EMAIL);
+  const [selectedMode, setSelectedMode] = useState<DemoMode>(DemoMode.PROFESSIONAL_EMAIL);
+  // Stages: 0:Start, 1:Typing, 2:Done/Pause, 3:Correction, 4:Result
+  const [animStage, setAnimStage] = useState(0); 
+  const [displayedRaw, setDisplayedRaw] = useState("");
+  const [editorText, setEditorText] = useState("");
+  const [isRecording, setIsRecording] = useState(false);
   
-  // 0: Idle (Wait for Fn), 1: Recording (User speaking), 2: Processing (Thinking), 3: Result (Output)
-  const [step, setStep] = useState(0); 
+  // Agent & Translation & Summarize Demo State
+  // 0: Idle
+  // 1: Interaction (Selection/Play/Record)
+  // 2: Trigger Voice Command
+  // 3: Processing
+  // 4: Show Result (Draft/Card)
+  // 5: Highlight Action (e.g. Send Button)
+  const [agentStep, setAgentStep] = useState(0);
 
-  // Auto-play loop logic
+  const scenario = SCENARIOS[lang][selectedMode];
+  const ui = UI_TEXT[lang];
+
+  // Derive active category from selected mode
+  const activeCategory = CATEGORY_CONFIG.find(cat => cat.modes.includes(selectedMode));
+  const isAgentMode = activeCategory?.id === 'agent';
+  const isTranslationMode = activeCategory?.id === 'translation';
+  const isSummarizeMode = activeCategory?.id === 'summarize';
+  const isComplexMode = isAgentMode || isTranslationMode || isSummarizeMode;
+
+  // --- Animation Loop (Left Side - Transcribe) ---
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    if (isComplexMode) {
+      setAnimStage(0);
+      return;
+    }
 
-    const runSequence = () => {
-      // 1. Idle phase (1.5s)
-      setStep(0);
-      timeout = setTimeout(() => {
-        // 2. Recording phase (2s) - Typing the raw input
-        setStep(1);
-        timeout = setTimeout(() => {
-          // 3. Processing phase (1.5s) - Spinner
-          setStep(2);
-          timeout = setTimeout(() => {
-            // 4. Result phase (4s) - Show result
-            setStep(3);
-            timeout = setTimeout(() => {
-              // Loop back
-              runSequence();
-            }, 6000);
-          }, 1500);
-        }, 2000);
-      }, 1500);
+    let typingInterval: ReturnType<typeof setInterval>;
+    let t2: ReturnType<typeof setTimeout>;
+    let t3: ReturnType<typeof setTimeout>;
+    let t4: ReturnType<typeof setTimeout>;
+
+    setAnimStage(0);
+    setDisplayedRaw("");
+    
+    const rawText = scenario.raw;
+    let charIndex = 0;
+
+    // Start typing slightly faster
+    const startDelay = setTimeout(() => {
+      setAnimStage(1);
+      typingInterval = setInterval(() => {
+        if (charIndex < rawText.length) {
+          setDisplayedRaw(rawText.slice(0, charIndex + 1));
+          charIndex++;
+        } else {
+          clearInterval(typingInterval);
+          setAnimStage(2); // Typing done
+          
+          // Trigger Correction
+          t3 = setTimeout(() => setAnimStage(3), 400);
+          // Show Result
+          t4 = setTimeout(() => setAnimStage(4), 1200);
+        }
+      }, 20);
+    }, 100);
+
+    return () => {
+      clearTimeout(startDelay);
+      clearInterval(typingInterval);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      clearTimeout(t4);
     };
+  }, [selectedMode, lang, isComplexMode]);
 
-    runSequence();
-
-    return () => clearTimeout(timeout);
-  }, [activeMode]); // Restart when mode changes
-
-  // Update active mode when category changes
+  // --- Animation Loop (Agent & Translation & Summarize Demo) ---
   useEffect(() => {
-    const category = CATEGORY_CONFIG.find(c => c.id === activeCategory);
-    if (category && category.modes.length > 0) {
-      setActiveMode(category.modes[0]);
+    if (!isComplexMode) {
+      setAgentStep(0);
+      return;
     }
-  }, [activeCategory]);
+    
+    // SEQUENCE for TRANSLATION MODES
+    if (isTranslationMode) {
+      setAgentStep(0);
+      const t0 = setTimeout(() => setAgentStep(1), 500); // Select/Play
+      const t1 = setTimeout(() => setAgentStep(2), 2000); // Trigger Mic
+      const t2 = setTimeout(() => setAgentStep(3), 4500); // Processing
+      const t3 = setTimeout(() => setAgentStep(4), 6500); // Result
+      return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    }
 
-  const scenario = SCENARIOS[lang][activeMode];
-  const isAgent = activeMode.startsWith('Agent');
-  const isSummarize = activeMode === DemoMode.SUMMARIZE_PDF || activeMode === DemoMode.SUMMARIZE_MEETING;
-  const isTranslate = activeMode.startsWith('Translation');
-  
-  // Custom render logic based on mode type
-  const renderContent = () => {
-    // 1. Idle State: Show Context or Placeholder
-    if (step === 0) {
-      if (isSummarize) {
-         return (
-            <div className="flex flex-col items-center justify-center h-full text-zinc-400 gap-4 animate-in fade-in duration-500">
-               {activeMode === DemoMode.SUMMARIZE_PDF ? (
-                 <div className="w-24 h-32 bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/20 rounded-xl flex items-center justify-center flex-col gap-2 p-2 relative shadow-sm">
-                    <div className="absolute top-0 right-0 p-2">
-                       <div className="w-2 h-2 rounded-full bg-red-500" />
-                    </div>
-                    <FileText className="w-8 h-8 text-red-500/60" />
-                    <span className="text-[10px] text-center font-medium text-red-700 dark:text-red-300 leading-tight line-clamp-2">
-                      {scenario.context}
-                    </span>
-                 </div>
-               ) : (
-                  <div className="w-24 h-24 bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 rounded-full flex items-center justify-center relative animate-pulse-slow">
-                     <Mic className="w-8 h-8 text-blue-500/60" />
-                  </div>
-               )}
-               <p className="text-sm font-medium opacity-70">
-                 {lang === 'zh' ? '按下 Fn 键...' : lang === 'ja' ? 'Fnキーを押して...' : 'Press Fn...'}
-               </p>
-            </div>
-         );
+    // SEQUENCE for SUMMARIZE MODES
+    if (isSummarizeMode) {
+      setAgentStep(0);
+      const t0 = setTimeout(() => setAgentStep(1), 500);  // Step 1: Interaction (Select File / Record)
+      const t1 = setTimeout(() => setAgentStep(2), 2500); // Step 2: Voice Command
+      const t2 = setTimeout(() => setAgentStep(3), 4500); // Step 3: Processing
+      const t3 = setTimeout(() => setAgentStep(4), 6500); // Step 4: Result (Draft / Card)
+      const t4 = setTimeout(() => setAgentStep(5), 8000); // Step 5: Action (Highlight Send / etc)
+      return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    }
+
+    // SEQUENCE for AGENT MODES
+    else if (isAgentMode) {
+      // ... existing agent sequence ...
+      if (selectedMode === DemoMode.AGENT_EMAIL) {
+        setAgentStep(0);
+        const t1 = setTimeout(() => setAgentStep(1), 100);  // Start Recording
+        const t2 = setTimeout(() => setAgentStep(2), 3000); // Stop Recording
+        const t3 = setTimeout(() => setAgentStep(3), 3500); // Context: Reading Email
+        const t4 = setTimeout(() => setAgentStep(4), 5000); // Drafting Spinner
+        const t5 = setTimeout(() => setAgentStep(5), 6500); // Show Draft
+        const t6 = setTimeout(() => setAgentStep(6), 7500); // Highlight Send
+        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
+      } 
+      else if (selectedMode === DemoMode.AGENT_TWITTER) {
+        setAgentStep(0);
+        const t1 = setTimeout(() => setAgentStep(1), 100);  // Start Recording
+        const t2 = setTimeout(() => setAgentStep(2), 3000); // Stop Recording
+        const t3 = setTimeout(() => setAgentStep(3), 3500); // Scanning Trends
+        const t4 = setTimeout(() => setAgentStep(4), 5500); // Drafting Spinner
+        const t5 = setTimeout(() => setAgentStep(5), 6500); // Show Draft
+        const t6 = setTimeout(() => setAgentStep(6), 7500); // Highlight Post
+        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
       }
-      if (isTranslate && scenario.context && activeMode !== DemoMode.TRANSLATION_REPLY_VOICE) {
-         return (
-            <div className="flex flex-col justify-center h-full text-left px-4 animate-in fade-in duration-500">
-               <span className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Original Context</span>
-               <p className="text-lg text-zinc-500 dark:text-zinc-400 font-serif italic leading-relaxed">
-                  "{scenario.context}"
-               </p>
-            </div>
-         );
+      else if (selectedMode === DemoMode.AGENT_CALENDAR) {
+        setAgentStep(0);
+        const t1 = setTimeout(() => setAgentStep(1), 100);  // Start Recording
+        const t2 = setTimeout(() => setAgentStep(2), 3000); // Stop Recording
+        const t3 = setTimeout(() => setAgentStep(3), 3500); // Checking Calendar
+        const t4 = setTimeout(() => setAgentStep(4), 5500); // Moving & Checking Conflict
+        const t5 = setTimeout(() => setAgentStep(5), 7000); // Show Result
+        const t6 = setTimeout(() => setAgentStep(6), 8000); // Highlight Confirm
+        return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); clearTimeout(t5); clearTimeout(t6); };
       }
-      return (
-        <div className="flex flex-col items-center justify-center h-full text-zinc-300 dark:text-zinc-600 gap-3">
-          <Keyboard className="w-12 h-12 stroke-[1]" />
-          <p className="text-sm font-medium">Waiting for input...</p>
-        </div>
-      );
     }
+  }, [selectedMode, isComplexMode, isAgentMode, isTranslationMode, isSummarizeMode]);
 
-    // 2. Recording State: Show user input
-    if (step === 1) {
-      return (
-        <div className="flex flex-col items-center justify-center h-full animate-in fade-in zoom-in-95 duration-300 relative">
-          {/* For Summarize: Show Voice Command Overlay over Context */}
-          {isSummarize ? (
-            <>
-               <div className="absolute inset-0 flex items-center justify-center opacity-30 blur-sm scale-90">
-                  {/* Background context faded */}
-                  {activeMode === DemoMode.SUMMARIZE_PDF ? (
-                    <FileText className="w-20 h-20 text-zinc-300" />
-                  ) : (
-                    <Mic className="w-20 h-20 text-zinc-300" />
-                  )}
-               </div>
-               <div className="z-10 bg-white dark:bg-zinc-800 shadow-2xl border border-zinc-100 dark:border-zinc-700 px-6 py-4 rounded-2xl flex items-center gap-4">
-                  <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  <p className="text-lg font-medium text-zinc-800 dark:text-white">
-                    {scenario.raw}
-                  </p>
-                  <AudioWaveform />
-               </div>
-            </>
-          ) : (
-            <>
-              <div className="mb-6 p-4 bg-blue-500/10 rounded-full">
-                <Mic className="w-8 h-8 text-blue-500 animate-pulse" />
-              </div>
-              <p className="text-xl md:text-2xl text-zinc-900 dark:text-white font-medium text-center px-8 leading-relaxed">
-                "{scenario.raw}"
-              </p>
-            </>
-          )}
-        </div>
-      );
+  // --- Interaction Logic (Right Side) ---
+  const handleMicClick = async () => {
+    if (isRecording) return;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setIsRecording(true);
+      setEditorText("");
+      stream.getTracks().forEach(track => track.stop());
+      setTimeout(() => {
+        setIsRecording(false);
+        simulateTyping(scenario.clean);
+      }, 1500); 
+    } catch (err) {
+      console.error("Microphone permission denied or error:", err);
+      alert(ui.micError);
     }
+  };
 
-    // 3. Processing State
-    if (step === 2) {
-      return (
-        <div className="flex flex-col items-center justify-center h-full animate-in fade-in duration-300">
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 blur-xl opacity-20 animate-pulse" />
-            <Loader2 className="w-10 h-10 text-zinc-400 animate-spin relative z-10" />
-          </div>
-          <p className="mt-4 text-sm font-medium text-zinc-500 animate-pulse">
-            {lang === 'zh' ? 'Villdo 思考中...' : lang === 'ja' ? 'Villdo 考え中...' : 'Villdo is thinking...'}
-          </p>
-        </div>
-      );
-    }
-
-    // 4. Result State
-    return (
-      <div className="h-full flex flex-col justify-center animate-in fade-in slide-in-from-bottom-4 duration-500 text-left px-2">
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-6 h-6 rounded-full bg-emerald-500/10 flex items-center justify-center">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-500" />
-          </div>
-          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">
-             {MODE_LABELS[lang][activeMode] || 'Refined'}
-          </span>
-        </div>
-        
-        {isAgent || isSummarize || isTranslate ? (
-          <div className="bg-zinc-50 dark:bg-black/20 rounded-xl p-6 border border-zinc-100 dark:border-white/5 font-mono text-sm leading-relaxed whitespace-pre-wrap text-zinc-700 dark:text-zinc-300 shadow-inner">
-            {scenario.clean}
-          </div>
-        ) : (
-          <div className="text-xl md:text-2xl text-zinc-900 dark:text-white leading-relaxed">
-             {scenario.renderDiff(lang, true)}
-          </div>
-        )}
-
-        <div className="mt-6 flex gap-2">
-           <button className="text-xs font-medium bg-zinc-100 dark:bg-white/10 hover:bg-zinc-200 dark:hover:bg-white/20 px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-300 transition-colors">
-              Copy
-           </button>
-           <button className="text-xs font-medium bg-zinc-100 dark:bg-white/10 hover:bg-zinc-200 dark:hover:bg-white/20 px-3 py-1.5 rounded-lg text-zinc-600 dark:text-zinc-300 transition-colors">
-              Insert
-           </button>
-        </div>
-      </div>
-    );
+  const simulateTyping = (text: string) => {
+    let i = 0;
+    const interval = setInterval(() => {
+      setEditorText(text.slice(0, i + 1));
+      i++;
+      if (i > text.length) clearInterval(interval);
+    }, 15);
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto relative">
       
-      {/* Category Tabs */}
-      <div className="flex justify-center mb-8">
-        <div className="inline-flex bg-zinc-100 dark:bg-white/5 p-1 rounded-full border border-zinc-200/50 dark:border-white/5 shadow-sm overflow-x-auto max-w-full">
-          {CATEGORY_CONFIG.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                 setActiveCategory(cat.id);
-                 setStep(0); // Reset animation
-              }}
-              className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-300 ${
-                activeCategory === cat.id
-                  ? 'bg-white dark:bg-zinc-800 text-black dark:text-white shadow-sm'
-                  : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
-              }`}
-            >
-              {cat.label[lang]}
-            </button>
-          ))}
+      {/* Top Navigation Tabs - Segmented Control Style */}
+      <div className="flex flex-col items-center mb-10 gap-5">
+        {/* Level 1: Categories - Segmented Control */}
+        <div className="overflow-x-auto py-2 scrollbar-hide w-full flex justify-center">
+          <div className="bg-zinc-200/50 dark:bg-white/10 backdrop-blur-md p-1 rounded-full border border-black/5 dark:border-white/5 flex gap-0.5 shadow-sm">
+            {CATEGORY_CONFIG.map((category) => {
+              const isActive = activeCategory?.id === category.id;
+              const isComingSoon = category.comingSoon;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => {
+                    setSelectedMode(category.modes[0]);
+                    setEditorText("");
+                  }}
+                  className={`relative py-1.5 rounded-full text-[13px] font-medium transition-all duration-300 whitespace-nowrap flex items-center justify-center ${
+                    isComingSoon ? 'px-4' : 'px-5'
+                  } ${
+                    isActive
+                      ? 'bg-white dark:bg-zinc-600 text-black dark:text-white shadow-[0_1px_3px_rgba(0,0,0,0.1)]'
+                      : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white'
+                  }`}
+                >
+                  {category.label[lang]}
+                  {category.comingSoon && (
+                    <span className="absolute -top-1.5 -right-2 bg-black dark:bg-white text-white dark:text-black text-[9px] font-bold px-1.5 py-0.5 rounded-full z-10 leading-none tracking-tight shadow-sm">
+                        SOON
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Level 2: Sub-options */}
+        <div className="flex justify-center animate-in fade-in slide-in-from-top-2 duration-300 min-h-[32px]">
+            {(activeCategory?.modes.length || 0) > 1 && (
+            <div className="flex gap-2 overflow-x-auto max-w-full px-4">
+              {activeCategory?.modes.map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => {
+                    setSelectedMode(mode);
+                    setEditorText("");
+                  }}
+                  className={`px-3 py-1 rounded-full text-[11px] font-medium transition-all duration-300 whitespace-nowrap border ${
+                    selectedMode === mode
+                      ? 'bg-black dark:bg-white text-white dark:text-black border-transparent shadow-sm'
+                      : 'bg-white/50 dark:bg-white/5 text-zinc-500 dark:text-zinc-400 border-black/5 dark:border-white/10 hover:border-black/10 dark:hover:border-white/20'
+                  }`}
+                >
+                  {MODE_LABELS[lang][mode]}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Mode Selector (Pills) */}
-      <div className="flex flex-wrap justify-center gap-2 mb-8">
-         {CATEGORY_CONFIG.find(c => c.id === activeCategory)?.modes.map(mode => (
-            <button
-               key={mode}
-               onClick={() => {
-                  setActiveMode(mode);
-                  setStep(0);
-               }}
-               className={`px-4 py-1.5 rounded-full text-xs font-medium border transition-all duration-200 ${
-                  activeMode === mode
-                     ? 'bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-500/30 text-blue-600 dark:text-blue-400'
-                     : 'bg-transparent border-transparent text-zinc-500 hover:bg-zinc-100 dark:hover:bg-white/5'
-               }`}
-            >
-               {MODE_LABELS[lang][mode]}
-            </button>
-         ))}
-      </div>
-
-      {/* Main Demo Display Area */}
-      <div className="relative bg-white dark:bg-zinc-900/80 backdrop-blur-xl border border-zinc-200 dark:border-white/10 rounded-3xl shadow-2xl dark:shadow-black/50 overflow-hidden transition-all duration-500 h-[400px] md:h-[320px]">
+      <div className="grid lg:grid-cols-2 gap-8">
         
-        {/* Top Bar (Mac Traffic Lights) */}
-        <div className="absolute top-0 left-0 w-full h-12 border-b border-zinc-100 dark:border-white/5 flex items-center px-4 gap-2 z-20 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-md">
-           <div className="w-3 h-3 rounded-full bg-red-400/80" />
-           <div className="w-3 h-3 rounded-full bg-amber-400/80" />
-           <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
-           <div className="ml-4 px-3 py-1 bg-zinc-100 dark:bg-white/5 rounded-md flex items-center gap-2">
-              {step === 1 ? <Mic className="w-3 h-3 text-red-500 animate-pulse" /> : <MousePointer2 className="w-3 h-3 text-zinc-400" />}
-              <span className="text-[10px] text-zinc-400 font-mono tracking-wide uppercase">
-                 {step === 0 ? 'Idle' : step === 1 ? 'Listening' : step === 2 ? 'Processing' : 'Done'}
+        {/* ---------------- LEFT CARD ---------------- */}
+        <div className="bg-white/80 dark:bg-[#151516]/80 backdrop-blur-2xl backdrop-saturate-150 rounded-[32px] border border-black/5 dark:border-white/10 shadow-2xl shadow-black/5 dark:shadow-black/20 overflow-hidden flex flex-col h-[480px] relative group transition-transform duration-700 hover:shadow-3xl">
+           {/* Header */}
+           <div className="h-14 border-b border-black/5 dark:border-white/5 bg-white/40 dark:bg-white/5 flex items-center justify-between px-6 backdrop-blur-sm">
+              <div className="flex gap-2 opacity-60 hover:opacity-100 transition-opacity">
+                 <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600"></div>
+                 <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600"></div>
+                 <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-600"></div>
+              </div>
+              <span className="text-[10px] font-semibold uppercase tracking-widest text-zinc-400">
+                {isComplexMode ? 'Capabilities' : ui.analysis}
               </span>
            </div>
-        </div>
 
-        {/* Content Area */}
-        <div className="pt-12 p-8 h-full relative text-left">
-           {renderContent()}
-        </div>
+           {/* Content Area */}
+           <div className="flex-1 p-8 flex flex-col justify-center relative bg-gradient-to-br from-zinc-50/50 to-white/50 dark:from-black/20 dark:to-zinc-900/20">
+              
+              {isComplexMode ? (
+                // --- Agent & Translation & Summarize: Capabilities (Left Side - Strict Left Align) ---
+                <div className="flex flex-col gap-4 animate-in fade-in duration-500 w-full text-left">
+                    
+                    {/* TRANSLATION CAPABILITIES */}
+                    {isTranslationMode && (
+                        <>
+                           <div className={`bg-white dark:bg-[#1E1E1E] p-4 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 flex flex-col items-start text-left ${selectedMode === DemoMode.TRANSLATION_SELECTION ? 'ring-1 ring-blue-500/20 shadow-md transform scale-[1.01]' : 'opacity-60 grayscale'}`}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="p-1.5 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600 dark:text-blue-400">
+                                        <MousePointer2 className="w-4 h-4" />
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                        {ui.translationDemo.selTitle}
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                                   {ui.translationDemo.selDesc}
+                                </p>
+                            </div>
+                            <div className={`bg-white dark:bg-[#1E1E1E] p-4 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 flex flex-col items-start text-left ${selectedMode === DemoMode.TRANSLATION_REPLY_TEXT ? 'ring-1 ring-blue-500/20 shadow-md transform scale-[1.01]' : 'opacity-60 grayscale'}`}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="p-1.5 bg-green-50 dark:bg-green-900/20 rounded-lg text-green-600 dark:text-green-400">
+                                        <MessageCircle className="w-4 h-4" />
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                        {ui.translationDemo.replyTitle}
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                                   {ui.translationDemo.replyDesc}
+                                </p>
+                            </div>
+                            <div className={`bg-white dark:bg-[#1E1E1E] p-4 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 flex flex-col items-start text-left ${selectedMode === DemoMode.TRANSLATION_REPLY_VOICE ? 'ring-1 ring-blue-500/20 shadow-md transform scale-[1.01]' : 'opacity-60 grayscale'}`}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="p-1.5 bg-purple-50 dark:bg-purple-900/20 rounded-lg text-purple-600 dark:text-purple-400">
+                                        <Play className="w-4 h-4" />
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                        {ui.translationDemo.voiceTitle}
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                                   {ui.translationDemo.voiceDesc}
+                                </p>
+                            </div>
+                        </>
+                    )}
 
-        {/* Progress Bar (at bottom) */}
-        <div className="absolute bottom-0 left-0 h-1 bg-blue-500/20 w-full">
-           <div 
-             className="h-full bg-blue-500 transition-all duration-300 ease-linear"
-             style={{ 
-               width: `${step === 0 ? 0 : step === 1 ? 33 : step === 2 ? 66 : 100}%`,
-               opacity: step === 0 ? 0 : 1
-             }}
-           />
-        </div>
+                    {/* SUMMARIZE CAPABILITIES */}
+                    {isSummarizeMode && (
+                        <>
+                           <div className={`bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 flex flex-col items-start text-left ${selectedMode === DemoMode.SUMMARIZE_PDF ? 'ring-1 ring-red-500/20 shadow-md transform scale-[1.01]' : 'opacity-60 grayscale'}`}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded-xl text-red-600 dark:text-red-400">
+                                        <FileText className="w-4 h-4" />
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                        {ui.summarizeDemo.pdfTitle}
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                                   {ui.summarizeDemo.pdfDesc}
+                                </p>
+                            </div>
+                            <div className={`bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm transition-all duration-300 flex flex-col items-start text-left ${selectedMode === DemoMode.SUMMARIZE_MEETING ? 'ring-1 ring-indigo-500/20 shadow-md transform scale-[1.01]' : 'opacity-60 grayscale'}`}>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl text-indigo-600 dark:text-indigo-400">
+                                        <Mic className="w-4 h-4" />
+                                    </div>
+                                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                        {ui.summarizeDemo.meetTitle}
+                                    </h3>
+                                </div>
+                                <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                                   {ui.summarizeDemo.meetDesc}
+                                </p>
+                            </div>
+                        </>
+                    )}
 
-      </div>
-    </div>
-  );
-};
+                    {/* EMAIL CAPABILITIES */}
+                    {selectedMode === DemoMode.AGENT_EMAIL && (
+                      <>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded-xl text-blue-600 dark:text-blue-400">
+                                    <Zap className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentEmailDemo?.cap1Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentEmailDemo?.cap1Desc}
+                            </p>
+                        </div>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl text-emerald-600 dark:text-emerald-400">
+                                    <ShieldCheck className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentEmailDemo?.cap2Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentEmailDemo?.cap2Desc}
+                            </p>
+                        </div>
+                      </>
+                    )}
+
+                    {/* TWITTER CAPABILITIES */}
+                    {selectedMode === DemoMode.AGENT_TWITTER && (
+                      <>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded-xl text-purple-600 dark:text-purple-400">
+                                    <TrendingUp className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentTwitterDemo?.cap1Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentTwitterDemo?.cap1Desc}
+                            </p>
+                        </div>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-orange-50 dark:bg-orange-900/20 rounded-xl text-orange-600 dark:text-orange-400">
+                                    <Lightbulb className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentTwitterDemo?.cap2Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentTwitterDemo?.cap2Desc}
+                            </p>
+                        </div>
+                      </>
+                    )}
+
+                    {/* CALENDAR CAPABILITIES */}
+                    {selectedMode === DemoMode.AGENT_CALENDAR && (
+                      <>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl text-indigo-600 dark:text-indigo-400">
+                                    <Calendar className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentCalendarDemo?.cap1Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentCalendarDemo?.cap1Desc}
+                            </p>
+                        </div>
+                        <div className="bg-white dark:bg-[#1E1E1E] p-5 rounded-2xl border border-black/5 dark:border-white/5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col items-start text-left">
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="p-2 bg-red-50 dark:bg-red-900/20 rounded-xl text-red-600 dark:text-red-400">
+                                    <AlertCircle className="w-4 h-4" />
+                                </div>
+                                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">
+                                    {ui.agentCalendarDemo?.cap2Title}
+                                </h3>
+                            </div>
+                            <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed text-left pl-1">
+                               {ui.agentCalendarDemo?.cap2Desc}
+                            </p>
+                        </div>
+                      </>
+                    )}
+                </div>
+              ) : (
+                // --- Transcribe Mode: Visualizer (Left Side) ---
+                <>
+                  <div className="relative z-10 mb-6 transition-all duration-500" key={selectedMode}>
+                     <div className="bg-white/80 dark:bg-white/5 backdrop-blur-md p-6 rounded-2xl rounded-tl-sm shadow-sm border border-black/5 dark:border-white/10">
+                        <div className="flex items-start gap-4">
+                           <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition

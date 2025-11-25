@@ -10,15 +10,15 @@ interface ComparisonFeatureProps {
 }
 
 const FeatureCard: React.FC<ComparisonFeatureProps> = ({ icon, title, description, visual }) => (
-  <div className="bg-white/60 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-3xl p-8 flex flex-col h-full hover:bg-white/80 dark:hover:bg-white/[0.07] transition-all duration-500 backdrop-blur-sm group shadow-sm dark:shadow-none">
-    <div className="mb-6 p-3 bg-zinc-100 dark:bg-white/10 w-fit rounded-2xl text-zinc-800 dark:text-white group-hover:bg-zinc-200 dark:group-hover:bg-white/20 transition-colors">
+  <div className="bg-white/60 dark:bg-white/5 border border-zinc-200/60 dark:border-white/[0.08] rounded-[32px] p-8 flex flex-col h-full hover:bg-white/80 dark:hover:bg-white/[0.08] hover:-translate-y-1 transition-all duration-500 backdrop-blur-xl shadow-lg shadow-zinc-200/30 dark:shadow-black/20">
+    <div className="mb-6 p-3.5 bg-zinc-100 dark:bg-white/10 w-fit rounded-2xl text-zinc-900 dark:text-white transition-colors">
       {icon}
     </div>
-    <h3 className="text-xl font-medium text-zinc-900 dark:text-white mb-3 tracking-tight">{title}</h3>
-    <p className="text-sm text-zinc-500 dark:text-zinc-400 leading-relaxed mb-8 flex-grow">
+    <h3 className="text-xl font-semibold text-zinc-900 dark:text-white mb-3 tracking-tight">{title}</h3>
+    <p className="text-base text-zinc-500 dark:text-zinc-400 leading-relaxed mb-10 flex-grow font-normal">
       {description}
     </p>
-    <div className="bg-zinc-50 dark:bg-black/40 rounded-xl p-6 font-mono text-sm border border-zinc-200 dark:border-white/5 shadow-inner">
+    <div className="bg-zinc-50/80 dark:bg-black/20 rounded-2xl p-6 font-mono text-sm border border-zinc-200/50 dark:border-white/5 shadow-inner backdrop-blur-sm">
       {visual}
     </div>
   </div>
@@ -73,8 +73,8 @@ export const Features: React.FC<{ lang: Language }> = ({ lang }) => {
   const t = CONTENT[lang];
 
   return (
-    <section className="py-32 max-w-7xl mx-auto px-6">
-      <div className="grid md:grid-cols-3 gap-6">
+    <section className="py-24 max-w-7xl mx-auto px-6">
+      <div className="grid md:grid-cols-3 gap-8">
         {/* Card 1: Fluent Logic */}
         <FeatureCard
           icon={<Sparkles className="w-6 h-6" />}
@@ -122,7 +122,7 @@ export const Features: React.FC<{ lang: Language }> = ({ lang }) => {
           title={t.structure.title}
           description={t.structure.desc}
           visual={
-            <div className="space-y-2 text-zinc-700 dark:text-zinc-300">
+            <div className="space-y-3 text-zinc-700 dark:text-zinc-300">
               {t.structure.list.map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600" />
